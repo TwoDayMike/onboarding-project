@@ -1,0 +1,3 @@
+.vs
+node_modules
+github-deploy-secrets.sh
