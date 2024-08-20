@@ -1,4 +1,4 @@
-﻿namespace Application.Common.Security
+﻿namespace Application.Common.Security.Enums
 {
     public enum Scope
     {

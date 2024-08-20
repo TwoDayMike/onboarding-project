@@ -2,6 +2,7 @@
 using Application.Common.Exceptions.Enums;
 using Application.Common.Interfaces;
 using Application.Common.Security;
+using Application.Common.Security.Attributes;
 using Application.TemplateExampleCustomers.Commands.Models;
 using Domain.ValueObjects;
 using MediatR;

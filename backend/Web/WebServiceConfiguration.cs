@@ -5,8 +5,8 @@ using Infrastructure.Persistence;
 using Microsoft.AspNetCore.Mvc;
 using NSwag;
 using NSwag.Generation.Processors.Security;
-using Web.DocumentProcessors;
 using Web.Filters;
+using Web.NSwag.DocumentProcessors;
 using Web.Services;
 using IAuthorizationService = Application.Common.Interfaces.IAuthorizationService;
 

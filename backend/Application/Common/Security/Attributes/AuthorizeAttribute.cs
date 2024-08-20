@@ -1,4 +1,6 @@
-﻿namespace Application.Common.Security.Attributes
+﻿using Application.Common.Security.Enums;
+
+namespace Application.Common.Security.Attributes
 {
     /// <summary>
     /// Specifies that the command or query that this attribute is applied to does require authorization.

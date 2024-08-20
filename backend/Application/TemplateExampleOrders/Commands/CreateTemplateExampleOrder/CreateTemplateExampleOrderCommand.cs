@@ -3,6 +3,7 @@ using Application.Common.Exceptions.Enums;
 using Application.Common.Interfaces;
 using Application.Common.Models;
 using Application.Common.Security;
+using Application.Common.Security.Attributes;
 using Domain.Entities;
 using Domain.Enums;
 using Domain.ValueObjects;

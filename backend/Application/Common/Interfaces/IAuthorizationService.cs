@@ -1,4 +1,4 @@
-﻿using Application.Common.Security;
+﻿using Application.Common.Security.Enums;
 
 namespace Application.Common.Interfaces
 {

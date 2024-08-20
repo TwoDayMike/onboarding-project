@@ -13,5 +13,9 @@ namespace Application.Common.Interfaces
         DbSet<TemplateExampleItem> TemplateExampleItems { get; set; }
         DbSet<TemplateExampleOrder> TemplateExampleOrders { get; set; }
 
+        DbSet<Todo> Todos { get; set; }
+
+        DbSet<TodoType> TodoTypes { get; set; }
+
     }
 }

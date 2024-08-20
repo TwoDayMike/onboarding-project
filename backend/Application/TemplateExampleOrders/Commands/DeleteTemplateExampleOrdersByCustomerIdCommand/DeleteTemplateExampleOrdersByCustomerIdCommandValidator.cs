@@ -1,6 +1,6 @@
 ﻿using FluentValidation;
 
-namespace Application.TemplateExampleOrders.Commands.DeleteTemplateExampleOrdersByCustomerId
+namespace Application.TemplateExampleOrders.Commands.DeleteTemplateExampleOrdersByCustomerIdCommand
 {
 
     public class DeleteTemplateExampleOrdersByCustomerIdCommandValidator : AbstractValidator<DeleteTemplateExampleOrdersByCustomerIdCommand>

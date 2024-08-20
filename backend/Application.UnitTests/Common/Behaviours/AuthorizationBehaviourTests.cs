@@ -2,8 +2,8 @@
 using Application.Common.Exceptions;
 using Application.Common.Interfaces;
 using Application.Common.Interfaces.Application.Common.Interfaces;
-using Application.Common.Security;
 using Application.Common.Security.Attributes;
+using Application.Common.Security.Enums;
 using MediatR;
 using Moq;
 using Shouldly;

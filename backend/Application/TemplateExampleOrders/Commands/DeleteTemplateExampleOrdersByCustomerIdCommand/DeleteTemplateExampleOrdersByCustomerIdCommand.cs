@@ -2,10 +2,11 @@
 using Application.Common.Exceptions.Enums;
 using Application.Common.Interfaces;
 using Application.Common.Security;
+using Application.Common.Security.Attributes;
 using MediatR;
 using Microsoft.EntityFrameworkCore;
 
-namespace Application.TemplateExampleOrders.Commands.DeleteTemplateExampleOrdersByCustomerId
+namespace Application.TemplateExampleOrders.Commands.DeleteTemplateExampleOrdersByCustomerIdCommand
 {
     [TODOAuthorize]
     public class DeleteTemplateExampleOrdersByCustomerIdCommand : IRequest<Unit>

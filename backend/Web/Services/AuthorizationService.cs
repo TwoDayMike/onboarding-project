@@ -1,5 +1,5 @@
 ﻿using Application.Common.Interfaces;
-using Application.Common.Security;
+using Application.Common.Security.Enums;
 
 namespace Web.Services
 {
