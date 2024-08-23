@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace Application.TemplateTodoTypes.Commands.CreateTemplateTodoType
 {
-    internal class TemplateTodoTypeDTO
+    public class TemplateTodoTypeDTO
     {
     }
 }

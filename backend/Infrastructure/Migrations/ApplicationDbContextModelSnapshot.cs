@@ -140,23 +140,32 @@ namespace Infrastructure.Migrations
 
             modelBuilder.Entity("Domain.Entities.Todo", b =>
                 {
-                    b.Property<int>("TodoId")
-                        .HasColumnType("int");
-
                     b.Property<int>("TodoTypeId")
                         .HasColumnType("int");
+
+                    b.Property<int>("TodoId")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("TodoId"));
 
                     b.Property<string>("Description")
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
+                    b.Property<bool>("IsCompleted")
+                        .HasColumnType("bit");
+
                     b.Property<string>("Name")
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
-                    b.HasKey("TodoId", "TodoTypeId");
+                    b.Property<int?>("UserId")
+                        .HasColumnType("int");
 
-                    b.HasIndex("TodoTypeId");
+                    b.HasKey("TodoTypeId", "TodoId");
+
+                    b.HasIndex("UserId");
 
                     b.ToTable("Todos");
                 });
@@ -176,6 +185,35 @@ namespace Infrastructure.Migrations
                     b.HasKey("Id");
 
                     b.ToTable("TodoTypes");
+                });
+
+            modelBuilder.Entity("Domain.Entities.User", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
+
+                    b.Property<string>("Email")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("FirstName")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("LastName")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("PasswordHash")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.HasKey("Id");
+
+                    b.ToTable("Users");
                 });
 
             modelBuilder.Entity("Domain.Entities.TemplateExampleCustomer", b =>
@@ -291,7 +329,14 @@ namespace Infrastructure.Migrations
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
+                    b.HasOne("Domain.Entities.User", "User")
+                        .WithMany("Todos")
+                        .HasForeignKey("UserId")
+                        .OnDelete(DeleteBehavior.SetNull);
+
                     b.Navigation("Type");
+
+                    b.Navigation("User");
                 });
 
             modelBuilder.Entity("Domain.Entities.TemplateExampleCustomer", b =>
@@ -312,6 +357,11 @@ namespace Infrastructure.Migrations
             modelBuilder.Entity("Domain.Entities.TodoType", b =>
                 {
                     b.Navigation("TodoTypes");
+                });
+
+            modelBuilder.Entity("Domain.Entities.User", b =>
+                {
+                    b.Navigation("Todos");
                 });
 #pragma warning restore 612, 618
         }

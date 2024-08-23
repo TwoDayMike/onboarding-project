@@ -7,11 +7,11 @@ using System.Threading.Tasks;
 
 namespace Application.TemplateTodo.Commands.UpdateTemplateTodoName
 {
-    public class UpdateTemplateTodoNameCommandValidator : AbstractValidator<UpdateTemplateTodoNameCommand>
+    public class UpdateTemplateTodoNameCommandValidator : AbstractValidator<UpdateTemplateTodoIsCompleteCommand>
     {
         public UpdateTemplateTodoNameCommandValidator() 
         {
-            RuleFor(x => x.Name).NotEmpty();
+            RuleFor(x => x.IsCompleted).NotNull();
         }
     }
 }

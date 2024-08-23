@@ -1,3 +1,4 @@
+import TodoTable from "components/TodoTable";
 import { Locale } from "i18n/Locale";
 import { GetStaticProps, NextPage } from "next";
 import { I18nProps } from "next-rosetta";
@@ -22,6 +23,7 @@ const Page: NextPage = () => {
   return (
     <>
       <h1>{t("strings.example")}</h1>
+      <TodoTable/>
       {loading && <div>... loading</div>}
       {!loading && value && <div>{JSON.stringify(value, null, 2)}</div>}
     </>

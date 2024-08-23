@@ -5,9 +5,12 @@ using Azure.Security.KeyVault.Secrets;
 using Infrastructure;
 using Infrastructure.Persistence;
 using Microsoft.ApplicationInsights.Extensibility;
+using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.IdentityModel.Tokens;
 using Serilog;
 using Serilog.Events;
+using System.Text;
 using Web;
 
 
@@ -69,6 +72,22 @@ try
     }
 
     builder.Services.AddHealthChecks();
+    var config = builder.Configuration;
+    builder.Services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme).AddJwtBearer(x =>
+    {
+        x.TokenValidationParameters = new Microsoft.IdentityModel.Tokens.TokenValidationParameters
+        {
+            ValidIssuer = config["JwtSettings:Issuer"],
+            ValidAudience = config["JwtSettings:Audience"],
+            IssuerSigningKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(config["JwtSettings:Key"]!)),
+            ValidateIssuer = true,
+            ValidateAudience = true,
+            ValidateLifetime = true,
+            ValidateIssuerSigningKey = true
+        };
+    });
+
+    builder.Services.AddAuthorization();
 
     ApplicationServiceConfiguration.ConfigureServices(builder.Services);
     InfrastructureServiceConfiguration.ConfigureServices(builder.Services, builder.Configuration, builder.Environment);
@@ -112,9 +131,8 @@ try
 
     app.UseRouting();
 
-    //TODO add auth.
-    //app.UseAuthentication();
-    //app.UseAuthorization();
+    app.UseAuthentication();
+    app.UseAuthorization();
 
     app.MapControllerRoute(
         name: "default",

@@ -25,6 +25,7 @@ namespace Infrastructure.Persistence
             return BeginTransaction();
         }
 
+
         public override async Task<int> SaveChangesAsync(CancellationToken cancellationToken = default)
         {
             return await base.SaveChangesAsync(cancellationToken);
@@ -36,6 +37,12 @@ namespace Infrastructure.Persistence
             builder.UseEncryption(_encryptionService);
 
             base.OnModelCreating(builder);
+
+            #region Cascading Todos on TodoType Deletion
+
+            
+
+            #endregion
         }
 
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
@@ -48,5 +55,12 @@ namespace Infrastructure.Persistence
         public DbSet<TemplateExampleItem> TemplateExampleItems { get; set; }
         public DbSet<TemplateExampleOrderItem> TemplateExampleOrderItems { get; set; }
         public DbSet<TemplateExampleOrder> TemplateExampleOrders { get; set; }
+
+        public DbSet<Todo> Todos { get; set; }
+
+        public DbSet<TodoType> TodoTypes { get; set; }
+
+        public DbSet<User> Users { get; set; }
+
     }
 }

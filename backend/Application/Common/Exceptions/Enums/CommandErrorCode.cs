@@ -34,6 +34,8 @@
         //Feel free to add more error codes below.
         //DO NOT ASSIGN VALUES TO THESE AS IT WILL CAUSE NSWAG ISSUES
         TemplateExampleEmailInUse,
-        TemplateExampleEntityNotFound
+        TemplateExampleEntityNotFound,
+        TemplateTodoTypeNameInUse,
+        TemplateAuthenticationInvalidCredentials
     }
 }

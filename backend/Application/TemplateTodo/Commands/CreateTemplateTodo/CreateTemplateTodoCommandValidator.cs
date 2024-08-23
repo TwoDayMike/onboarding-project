@@ -12,7 +12,7 @@ namespace Application.TemplateTodo.Commands.CreateTodo
         public CreateTemplateTodoCommandValidator()
         {
             RuleFor(x => x.Name).NotEmpty();
-
+            RuleFor(x => x.Description).NotEmpty();
         }
     }
 }

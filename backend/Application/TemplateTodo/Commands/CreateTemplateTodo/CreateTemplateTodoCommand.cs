@@ -3,6 +3,7 @@ using Application.TemplateExampleOrders.Commands.CreateTemplateExampleOrder;
 using Domain.Entities;
 using Application.Common.Interfaces;
 using Application.Common.Security.Attributes;
+using Microsoft.EntityFrameworkCore;
 
 namespace Application.TemplateTodo.Commands.CreateTodo
 {
@@ -24,15 +25,23 @@ namespace Application.TemplateTodo.Commands.CreateTodo
             }
             public async Task<int> Handle(CreateTemplateTodoCommand request, CancellationToken cancellationToken)
             {
+                // Detach the TodoType from the current DbContext to prevent automatic tracking
+                var todoType = await _applicationDbContext.TodoTypes.FindAsync(request.TodoTypeId, cancellationToken);
+
+                if (todoType is null)
+                {
+                    throw new Exception("TodoType not found");
+                }
+
                 var todo = new Todo
                 {
                     Name = request.Name,
-                    TodoTypeId = request.TodoTypeId,
+                    Type = todoType, // Since todoType is detached, EF Core won't track changes to it
                     Description = request.Description,
+                    IsCompleted = false,
                 };
 
                 _applicationDbContext.Todos.Add(todo);
-
                 await _applicationDbContext.SaveChangesAsync(cancellationToken);
 
                 return todo.TodoId;

@@ -705,6 +705,19 @@ export interface TemplateExampleSimpleCustomerDTO {
     phone?: string;
 }
 
+export interface TodoExampleDTO {
+    id: number;
+    name: string;
+    typeName?: string;
+    description: string;
+    isCompleted : boolean;
+}
+
+export interface TodoTypeExampleDTO {
+    id: number;
+    name: string;
+}
+
 export interface GetTemplateExampleCustomersQuery {
 }
 

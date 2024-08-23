@@ -1,6 +1,7 @@
 ﻿using Application.Common.Exceptions;
 using Application.Common.Exceptions.Enums;
 using Application.Common.Interfaces;
+using Application.Common.Security.Attributes;
 using MediatR;
 using Microsoft.EntityFrameworkCore;
 using System;
@@ -12,34 +13,36 @@ using System.Threading.Tasks;
 
 namespace Application.TemplateTodo.Commands.UpdateTemplateTodoName
 {
-    public class UpdateTemplateTodoNameCommand : IRequest<Unit>
+    [TODOAuthorize]
+    public class UpdateTemplateTodoIsCompleteCommand : IRequest<Unit>
     {
         public required int Id { get; set; }
-        public string Name { get; set; } = string.Empty;
-
-        public int? TodoTypeId { get; set; }
-        public class UpdateTemplateTodoCommandHandler : IRequestHandler<UpdateTemplateTodoNameCommand, Unit>
+        public required bool IsCompleted { get; set; }
+        public class UpdateTemplateTodoIsCompleteCommandHandler : IRequestHandler<UpdateTemplateTodoIsCompleteCommand, Unit>
         {
             private readonly IApplicationDbContext _applicationDbContext;
 
-            public UpdateTemplateTodoCommandHandler(IApplicationDbContext applicationDbContext)
+            public UpdateTemplateTodoIsCompleteCommandHandler(IApplicationDbContext applicationDbContext)
             {
                 _applicationDbContext = applicationDbContext;
             }
 
-            public async Task<Unit> Handle(UpdateTemplateTodoNameCommand request, CancellationToken cancellationToken)
+            public async Task<Unit> Handle(UpdateTemplateTodoIsCompleteCommand request, CancellationToken cancellationToken)
             {
                 var todo = await _applicationDbContext.Todos.FirstOrDefaultAsync(x => x.TodoId == request.Id, cancellationToken);
 
                 if (todo is null)
                     throw new CommandErrorCodeException(CommandErrorCode.TemplateExampleEntityNotFound);
 
-                if (request.TodoTypeId is int typeId)
-                {
-                    todo.TodoTypeId = typeId;
-                }
+                todo.IsCompleted = request.IsCompleted;
+                await _applicationDbContext.SaveChangesAsync(cancellationToken);
+                //if (request.TodoTypeId is int typeId)
+                //{
+                //    todo.TodoTypeId = typeId;
+                //}
 
-                todo.Name = request.Name;
+                //todo.Name = request.Name;
+
 
                 return Unit.Value;
             }

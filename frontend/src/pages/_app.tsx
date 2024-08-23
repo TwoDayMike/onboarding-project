@@ -1,3 +1,4 @@
+import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
 import { I18nProvider } from "next-rosetta";
 import type { AppProps, NextWebVitalsMetric } from "next/app";
 import Head from "next/head";
@@ -13,6 +14,7 @@ export function reportWebVitals(metric: NextWebVitalsMetric): void {
 
 const MyApp = ({ Component, pageProps, __N_SSG }: AppProps): ReactElement => {
   // usePWA(); //! OPT IN
+  const queryClient = new QueryClient();
 
   return (
     <main>
@@ -33,13 +35,15 @@ const MyApp = ({ Component, pageProps, __N_SSG }: AppProps): ReactElement => {
       <noscript>
         <h1>JavaScript must be enabled!</h1>
       </noscript>
-      <AuthContextProvider>
-        <I18nProvider table={pageProps.table}>
-          <LocaleContextProvider>
-            <Component {...pageProps} />
-          </LocaleContextProvider>
-        </I18nProvider>
-      </AuthContextProvider>
+      <QueryClientProvider client={queryClient}>
+        <AuthContextProvider>
+          <I18nProvider table={pageProps.table}>
+            <LocaleContextProvider>
+              <Component {...pageProps} />
+            </LocaleContextProvider>
+          </I18nProvider>
+        </AuthContextProvider>
+      </QueryClientProvider>
     </main>
   );
 };

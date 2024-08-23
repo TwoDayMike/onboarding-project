@@ -17,5 +17,7 @@ namespace Application.Common.Interfaces
 
         DbSet<TodoType> TodoTypes { get; set; }
 
+        DbSet<User> Users { get; set; }
+
     }
 }

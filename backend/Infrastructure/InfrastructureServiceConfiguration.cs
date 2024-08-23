@@ -20,6 +20,7 @@ namespace Infrastructure
             services.AddScoped<AuditableEntitySaveChangesInterceptor>();
             services.AddOptions<DatabaseOptions>()
                 .Bind(configuration.GetSection(DatabaseOptions.Key));
+            services.AddOptions<JwtSettings>().BindConfiguration(JwtSettings.SectionName);
 
 
             if (!environment.IsEnvironment("Test") && !environment.IsEnvironment("NSwag"))
@@ -62,6 +63,7 @@ namespace Infrastructure
                 .Bind(configuration.GetSection(EncryptionOptions.OptionsPath));
 
             services.AddSingleton<IEncryptionService, EncryptionService>();
+            services.AddScoped<IJwtProvider, JwtProvider>();
 
         }
     }
