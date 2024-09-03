@@ -1,6 +1,6 @@
 import { useMutation, useQueryClient } from "@tanstack/react-query";
 
-interface PutTodoRequest {
+export interface PutTodoRequest {
     id: number;
     isCompleted: boolean;
 }
@@ -17,7 +17,8 @@ async function putTodo(request : PutTodoRequest) {
 function usePutTodo() {
     const queryClient = useQueryClient();
     return useMutation({mutationKey: ["postTodo"], mutationFn: putTodo, onSuccess: () => {
-        queryClient.invalidateQueries({queryKey: ["todos"]})
+        queryClient.invalidateQueries({queryKey: ["todos" ]})
+        queryClient.invalidateQueries({queryKey: ["userTodo"]})
     }});
 }
 

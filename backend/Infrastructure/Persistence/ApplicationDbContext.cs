@@ -62,5 +62,11 @@ namespace Infrastructure.Persistence
 
         public DbSet<User> Users { get; set; }
 
+        public DbSet<LogEntry> LogEntries { get; set; }
+
+        public DbSet<LogType> LogTypes { get; set; }
+
+        public DbSet<Role> Role { get; set; }
+
     }
 }

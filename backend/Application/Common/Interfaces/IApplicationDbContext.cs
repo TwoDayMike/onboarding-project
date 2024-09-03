@@ -19,5 +19,11 @@ namespace Application.Common.Interfaces
 
         DbSet<User> Users { get; set; }
 
+        DbSet<LogEntry> LogEntries { get; set; }
+
+        DbSet<LogType> LogTypes { get; set; }
+
+        DbSet<Role> Role { get; set; }
+
     }
 }

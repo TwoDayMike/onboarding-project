@@ -5,6 +5,9 @@ import Head from "next/head";
 import { ReactElement } from "react";
 import { AuthContextProvider } from "services/auth/useAuth";
 import { LocaleContextProvider } from "services/locale/useLocale";
+import './../../public/globals.css'
+import NavigationBar from "components/Navigation";
+import { Toaster } from "components/UI/Toaster";
 
 export function reportWebVitals(metric: NextWebVitalsMetric): void {
   // TODO consider removing before moving into production. Or limit the scope.
@@ -39,7 +42,10 @@ const MyApp = ({ Component, pageProps, __N_SSG }: AppProps): ReactElement => {
         <AuthContextProvider>
           <I18nProvider table={pageProps.table}>
             <LocaleContextProvider>
-              <Component {...pageProps} />
+              <NavigationBar>
+                <Component {...pageProps} />
+                <Toaster />
+              </NavigationBar>
             </LocaleContextProvider>
           </I18nProvider>
         </AuthContextProvider>

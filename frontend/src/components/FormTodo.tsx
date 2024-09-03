@@ -2,6 +2,7 @@ import usePostTodo from "hooks/usePostTodo";
 import { useState } from "react"
 import { SubmitHandler, useForm } from "react-hook-form";
 import TodoTypeDropDown from "./TodoTypeDropDown";
+import { Tabs, TabsContent, TabsList, TabsTrigger } from "./UI/Tabs";
 type formType = "Todo" | "TodoType";
 
 interface todoInputs {
@@ -11,11 +12,11 @@ interface todoInputs {
 }
 function FormTodo() {
     const [formType, setFormType] = useState<formType>("Todo")
-    const {register, handleSubmit} = useForm();
-    const {register: registerTodo, handleSubmit: handleSubmitTodo} = useForm<todoInputs>();
-    const {mutateAsync} = usePostTodo();
+    const { register, handleSubmit } = useForm();
+    const { register: registerTodo, handleSubmit: handleSubmitTodo } = useForm<todoInputs>();
+    const { mutateAsync } = usePostTodo();
 
-    const onTodoSubmit : SubmitHandler<todoInputs> = async (data, event) => {
+    const onTodoSubmit: SubmitHandler<todoInputs> = async (data, event) => {
         event.preventDefault();
         console.log(data)
         data["todoTypeId"] = Number(data["todoTypeId"])
@@ -23,32 +24,30 @@ function FormTodo() {
         await mutateAsync(data);
     }
     return (
-        <div style={{ display: "flex", justifyContent: "center", flexDirection: "column", alignItems: "center", marginBottom: 50 }}>
-            <div style={{ display: "flex", gap: 15 }}>
-                <button style={{ width: "100px", padding: "10px", background: "blue", border: "none", borderRadius: 18 }} onClick={() => setFormType("TodoType")}>Set TodoType</button>
-                <button style={{ width: "100px", padding: "10px", background: "green", border: "none", borderRadius: 18 }} onClick={() => setFormType("Todo")}>Set Todo</button>
-            </div>
-            <div style={{ padding: 10 }}>{formType}</div>
-            {formType === "Todo" ?
-                <form onSubmit={handleSubmitTodo(onTodoSubmit)} style={{ display: 'flex', flexDirection: 'column' }}>
-                    <label>Name</label>
+        <Tabs className="flex flex-col bg-transparent justify-center my-4">
+            <TabsList>
+                <TabsTrigger value={"Todo"}>Todo type</TabsTrigger>
+                <TabsTrigger value={"TodoType"}>Todo</TabsTrigger>
+            </TabsList>
+            <TabsContent value="Todo"> 
+                <form className="flex flex-col gap-2" onSubmit={handleSubmitTodo(onTodoSubmit)} >
+                    <label className="text-center">Name</label>
                     <input {...registerTodo("name")} type="text"></input>
-                    <label>Description</label>
+                    <label className="text-center">Description</label>
                     <input {...registerTodo("description")} type="text"></input>
-                    <label>Name</label>
-                    <TodoTypeDropDown registerTodo={registerTodo("todoTypeId")}/>
-                    <button style={{ margin: 20, background: "green", border: "none", padding: 8, borderRadius: 12 }}>Add</button>
+                    <label className="text-center">Type</label>
+                    <TodoTypeDropDown registerTodo={registerTodo("todoTypeId")} />
+                    <button >Add</button>
                 </form>
-                : null}
-
-            {formType === "TodoType" ?
-                <form style={{ display: 'flex', flexDirection: 'column' }}>
+            </TabsContent>
+            <TabsContent value="TodoType">
+                <form>
                     <label>Name</label>
                     <input type="text"></input>
-                    <button  style={{ margin: 20, background: "green", border: "none", padding: 8, borderRadius: 12 }}>Add</button>
+                    <button>Add</button>
                 </form>
-                : null}
-        </div>
+            </TabsContent>
+        </Tabs>
     )
 }
 

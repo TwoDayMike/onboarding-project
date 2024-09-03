@@ -15,6 +15,7 @@ namespace Infrastructure.Persistence.Configurations
         {
             builder.HasKey(x => new { x.Id });
             builder.HasMany(x => x.Todos).WithOne(x => x.User);
+            builder.HasOne(x => x.Role).WithMany(x => x.Users).HasForeignKey(x => x.RoleId).IsRequired(true).OnDelete(DeleteBehavior.Cascade);
         }
     }
 }

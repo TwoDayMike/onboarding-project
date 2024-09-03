@@ -16,12 +16,12 @@ namespace Domain.Entities
 
         public required string Description { get; set; } = string.Empty;
 
-        public required bool IsCompleted { get; set; } 
-
+        public required bool IsCompleted { get; set; }
+        [ForeignKey("TodoTypeId")]
         public int TodoTypeId { get; set; }
 
         public TodoType? Type { get; set; }
-
+        [ForeignKey("UserId")]
         public int? UserId { get; set; }
 
         public User? User { get; set; }

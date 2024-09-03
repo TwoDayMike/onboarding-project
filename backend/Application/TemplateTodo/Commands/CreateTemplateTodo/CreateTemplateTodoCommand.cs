@@ -19,6 +19,8 @@ namespace Application.TemplateTodo.Commands.CreateTodo
 
             private readonly IApplicationDbContext _applicationDbContext;
 
+            private const string LogName = "Created Todo";
+
             public CreateTemplateExampleOrderCommandHandler(IApplicationDbContext applicationDbContext)
             {
                 _applicationDbContext = applicationDbContext;
@@ -30,7 +32,7 @@ namespace Application.TemplateTodo.Commands.CreateTodo
 
                 if (todoType is null)
                 {
-                    throw new Exception("TodoType not found");
+                    Console.WriteLine("SKIPPING");
                 }
 
                 var todo = new Todo
@@ -41,9 +43,20 @@ namespace Application.TemplateTodo.Commands.CreateTodo
                     IsCompleted = false,
                 };
 
+
                 _applicationDbContext.Todos.Add(todo);
                 await _applicationDbContext.SaveChangesAsync(cancellationToken);
 
+                var logEntry = new LogEntry
+                {
+                    Name = LogName,
+                    Description = $"{todo.TodoId} was just created",
+                    LogTypeId = 1
+
+                };
+
+                _applicationDbContext.LogEntries.Add(logEntry);
+                await _applicationDbContext.SaveChangesAsync(cancellationToken);
                 return todo.TodoId;
             }
         }

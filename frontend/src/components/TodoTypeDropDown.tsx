@@ -1,7 +1,8 @@
 import { Suspense } from "react";
-import Select from "./UI/Select";
+import {Select, SelectTrigger} from "./UI/Select";
 import useTodoTypes from "hooks/useTodoTypes";
 import { UseFormRegisterReturn } from "react-hook-form";
+import { SelectContent, SelectItem, SelectValue } from "@radix-ui/react-select";
 
 interface TodoTypeDropdown{
     registerTodo : UseFormRegisterReturn<"todoTypeId">;
@@ -18,12 +19,15 @@ function TodoTypeDropDown(props : TodoTypeDropdown) {
         return <div>Something went wrong on the server.</div>
 
     return (
-        <Select title="todoType">
-            {data.map((e) => {
-                return (<option {...props.registerTodo} key={e.id} value={Number(e.id)}>
-                    {e.name}
-                </option>)
-            })}
+        <Select>
+            <SelectTrigger>
+                <SelectValue placeholder="Choose a todo type or todo area"></SelectValue>
+            </SelectTrigger>
+            <SelectContent>
+                {data.map((todoType) => {
+                    return (<SelectItem key={todoType.id} value={(String(todoType.id))}>{todoType.name}</SelectItem>)
+                })}
+            </SelectContent>
         </Select>
     )
 }

@@ -9,9 +9,11 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using Application.Common.Security.Attributes;
 
 namespace Application.TemplateAuthentication.Commands.LoginTemplate
 {
+    [TODOAuthorize]
     public class LoginTemplateCommand : IRequest<string>
     {
         public required string Email { get; set; } = string.Empty;
@@ -31,7 +33,7 @@ namespace Application.TemplateAuthentication.Commands.LoginTemplate
             public async Task<string> Handle(LoginTemplateCommand request, CancellationToken cancellationToken)
             {
                 // Get Member
-                var user = await _applicationDbContext.Users.FirstOrDefaultAsync(x => x.Email.Equals(request.Email, StringComparison.InvariantCultureIgnoreCase), cancellationToken);
+                var user = await _applicationDbContext.Users.Include(x => x.Role).FirstOrDefaultAsync(x => x.Email.Equals(request.Email), cancellationToken);
 
                 if (user is null)
                 {

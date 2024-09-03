@@ -1,7 +1,9 @@
 ﻿using Application.TemplateTodo.Commands.CreateTodo;
 using Application.TemplateTodo.Commands.DeleteTemplateTodoById;
+using Application.TemplateTodo.Commands.UpdateTemplateTodoAssignee;
 using Application.TemplateTodo.Commands.UpdateTemplateTodoName;
 using Application.TemplateTodo.Queries.GetTemplateTodo;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 
 namespace Web.Controllers
@@ -28,6 +30,12 @@ namespace Web.Controllers
             return Ok();
         }
 
+        [HttpPut("[Action]"), Authorize]
+        public async Task<ActionResult> AssigneTodo(UpdateTemplateTodoAssigneeCommand command)
+        {
+            await Mediator.Send(command);
+            return Ok();
+        }
         [HttpGet("[Action]")]
         public async Task<ActionResult<List<TodoExampleDTO>>> Get([FromQuery]GetTemplateTodoQuery query)
         {
